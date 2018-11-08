@@ -14,6 +14,8 @@ public @interface TypescriptComments {
     /**
      * Text used when rendering the target element in TypeScript.
      * (each array element is rendered as a comment line)
+     *
+     * @return the comments
      */
     String[] value() default {};
 }

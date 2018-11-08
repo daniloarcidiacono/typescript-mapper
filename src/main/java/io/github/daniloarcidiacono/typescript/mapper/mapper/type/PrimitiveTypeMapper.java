@@ -7,6 +7,10 @@ import java.lang.reflect.Type;
 public class PrimitiveTypeMapper implements TypeMapper {
     @Override
     public TypescriptType map(Type type) {
+        if (!supports(type)) {
+            return null;
+        }
+
         final Class<?> clazz = (Class<?>)type;
         if (Object.class.equals(clazz)) {
             return TypescriptAnyType.INSTANCE;
@@ -41,8 +45,7 @@ public class PrimitiveTypeMapper implements TypeMapper {
         return TypescriptNullType.INSTANCE;
     }
 
-    @Override
-    public boolean supports(Type type) {
+    private boolean supports(Type type) {
         return type instanceof Class && (isBoxedType((Class)type) || isPrimitiveType((Class)type));
     }
 

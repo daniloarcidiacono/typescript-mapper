@@ -1,0 +1,12 @@
+= TypeScript Mapper User Guide
+Danilo Arcidiacono <danilo.arcidiacono@gmail.com>
+2018-09-29
+:revnumber: {project-version}
+:example-caption!:
+ifndef::imagesdir[:imagesdir: images]
+ifndef::sourcedir[:sourcedir: ../../main/java]
+
+This is a user manual for Conectus API gateway.
+
+== Introduction
+include::./introduction.adoc[]

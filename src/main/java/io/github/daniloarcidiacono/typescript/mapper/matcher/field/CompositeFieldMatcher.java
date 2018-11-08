@@ -1,0 +1,18 @@
+package io.github.daniloarcidiacono.typescript.mapper.matcher.field;
+
+import io.github.daniloarcidiacono.commons.lang.Composite;
+
+import java.lang.reflect.Field;
+
+public class CompositeFieldMatcher extends Composite<FieldMatcher> implements FieldMatcher {
+    @Override
+    public boolean matches(final Field field) {
+        for (FieldMatcher matcher : components) {
+            if (matcher.matches(field)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}

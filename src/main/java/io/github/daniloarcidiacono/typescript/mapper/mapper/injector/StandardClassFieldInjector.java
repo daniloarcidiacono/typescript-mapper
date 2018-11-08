@@ -2,16 +2,27 @@ package io.github.daniloarcidiacono.typescript.mapper.mapper.injector;
 
 import io.github.daniloarcidiacono.typescript.mapper.annotation.TypescriptDTO;
 import io.github.daniloarcidiacono.typescript.mapper.mapper.field.FieldMapper;
+import io.github.daniloarcidiacono.typescript.mapper.matcher.CompositeClassMatcher;
+import io.github.daniloarcidiacono.typescript.mapper.matcher.field.CompositeFieldMatcher;
 import io.github.daniloarcidiacono.typescript.template.declaration.TypescriptField;
 import io.github.daniloarcidiacono.typescript.template.declaration.TypescriptInterface;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 public class StandardClassFieldInjector implements ClassFieldInjector {
     // Field mapper
-    private FieldMapper fieldMapper;
+    private final FieldMapper fieldMapper;
 
+    // Class filters
+    private final CompositeClassMatcher classFilter = new CompositeClassMatcher();
+
+    // Field filters
+    private final CompositeFieldMatcher fieldFilter = new CompositeFieldMatcher();
+
+    /**
+     * Initializers the injector with no configuration.
+     * @param fieldMapper the field mapper
+     */
     public StandardClassFieldInjector(final FieldMapper fieldMapper) {
         this.fieldMapper = fieldMapper;
     }
@@ -22,8 +33,13 @@ public class StandardClassFieldInjector implements ClassFieldInjector {
 
         // This does not get inherited fields
         for (Field field : javaClass.getDeclaredFields()) {
+            // @TODO: Implement as field filters!
             // Do not parse synthetic fields
             if (field.isSynthetic()) {
+                continue;
+            }
+
+            if (fieldFilter.matches(field)) {
                 continue;
             }
 
@@ -51,13 +67,24 @@ public class StandardClassFieldInjector implements ClassFieldInjector {
                 }
             }
 
+            if (classFilter.matches(field.getType())) {
+                continue;
+            }
+
+            // Map the field
             final TypescriptField tsField = fieldMapper.mapField(field);
+
+            // Skip unsupported fields
+            if (tsField == null) {
+                continue;
+            }
+
             iface.getFields().add(tsField);
         }
     }
 
     @Override
-    public boolean supports(Class<?> javaClass) {
+    public boolean supports(final Class<?> javaClass) {
         return true;
     }
 
@@ -65,7 +92,11 @@ public class StandardClassFieldInjector implements ClassFieldInjector {
         return fieldMapper;
     }
 
-    public void setFieldMapper(FieldMapper fieldMapper) {
-        this.fieldMapper = fieldMapper;
+    public CompositeClassMatcher getClassFilter() {
+        return classFilter;
+    }
+
+    public CompositeFieldMatcher getFieldFilter() {
+        return fieldFilter;
     }
 }

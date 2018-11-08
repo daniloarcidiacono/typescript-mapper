@@ -48,6 +48,7 @@
         <junit.bom.version>5.2.0</junit.bom.version>
         <junit.platform.version>1.2.0</junit.platform.version>
         <jackson.version>2.9.5</jackson.version>
+        <slf4j.version>1.7.25</slf4j.version>
         <reflections.version>0.9.11</reflections.version>
         <commons-lang.version>0.0.1-SNAPSHOT</commons-lang.version>
         <typescript-template.version>0.0.1-SNAPSHOT</typescript-template.version>
@@ -60,7 +61,6 @@
         <maven-gpg.plugin.version>1.6</maven-gpg.plugin.version>
         <maven-release.plugin.version>2.5.3</maven-release.plugin.version>
         <jacoco.plugin.version>0.7.9</jacoco.plugin.version>
-        <pitest.version>1.4.1</pitest.version>
         <asciidoctor-maven.plugin.version>1.5.6</asciidoctor-maven.plugin.version>
         <asciidoctorj.pdf.version>1.5.0-alpha.16</asciidoctorj.pdf.version>
     </properties>
@@ -97,15 +97,14 @@
             <version>${reflections.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.pitest</groupId>
-            <artifactId>pitest-parent</artifactId>
-            <version>${pitest.version}</version>
-            <type>pom</type>
         </dependency>
     </dependencies>
     <build>
@@ -208,28 +207,6 @@
                 </executions>
             </plugin>
 
-            <!-- Mutation tests -->
-            <plugin>
-                <groupId>org.pitest</groupId>
-                <artifactId>pitest-maven</artifactId>
-                <version>${pitest.version}</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.pitest</groupId>
-                        <artifactId>pitest-junit5-plugin</artifactId>
-                        <version>0.6</version>
-                    </dependency>
-                </dependencies>
-                <!--<configuration>-->
-                <!--<targetClasses>-->
-                <!--<param>com.baeldung.testing.mutation.*</param>-->
-                <!--</targetClasses>-->
-                <!--<targetTests>-->
-                <!--<param>com.baeldung.mutation.test.*</param>-->
-                <!--</targetTests>-->
-                <!--</configuration>-->
-            </plugin>
-
             <!-- Documentation -->
             <plugin>
                 <groupId>org.asciidoctor</groupId>
@@ -252,20 +229,26 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceDirectory>documentation/src/docs/asciidoc</sourceDirectory>
-                    <outputDirectory>target/docbook/en-US</outputDirectory>
+                    <sourceDirectory>src/docs/asciidoc</sourceDirectory>
+                    <outputDirectory>target/docs/asciidoc</outputDirectory>
                     <backend>html5</backend>
                     <!--<backend>pdf</backend>-->
-
                     <sourceHighlighter>coderay</sourceHighlighter>
+                    <doctype>book</doctype>
                     <attributes>
-                        <tabSize>4</tabSize>
-                        <icons>font</icons>
-                        <revnumber>${project.version}</revnumber>
-                        <sectanchors>true</sectanchors>
+                        <imagesdir>./images</imagesdir>
+                        <resourceDir>${project.basedir}/src/docs/resources</resourceDir>
                         <toc>left</toc>
+                        <sectnums>true</sectnums>
+                        <sectanchors>true</sectanchors>
+                        <tabSize>4</tabSize>
                         <allow-uri-read/>
-                        <resourceDir>${project.basedir}/documentation/src/resources</resourceDir>
+                        <revnumber>${project.version}</revnumber>
+                        <revdate>${maven.build.timestamp}</revdate>
+                        <organization>${project.organization.name}</organization>
+                        <sourcedir>${project.build.sourceDirectory}</sourcedir>
+                        <project-version>${project.version}</project-version>
+                        <icons>font</icons>
                     </attributes>
                 </configuration>
             </plugin>

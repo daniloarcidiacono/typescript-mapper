@@ -20,6 +20,10 @@ import java.lang.reflect.Field;
 public class JacksonFieldMapper implements FieldMapper {
     @Override
     public TypescriptField mapFieldInternal(Field field) {
+        if (!supports(field)) {
+            return null;
+        }
+
         final JsonSubTypes subTypesAnnotation = field.getDeclaringClass().getAnnotation(JsonSubTypes.class);
         final TypescriptUnionType fieldType = new TypescriptUnionType();
         for (JsonSubTypes.Type subType : subTypesAnnotation.value()) {
@@ -29,8 +33,7 @@ public class JacksonFieldMapper implements FieldMapper {
         return new TypescriptField(field.getName(), fieldType);
     }
 
-    @Override
-    public boolean supports(final Field field) {
+    private boolean supports(final Field field) {
         return field.getDeclaringClass().isAnnotationPresent(JsonSubTypes.class) &&
                field.getDeclaringClass().isAnnotationPresent(JsonTypeInfo.class) &&
                field.getName().equals(field.getDeclaringClass().getAnnotation(JsonTypeInfo.class).property());

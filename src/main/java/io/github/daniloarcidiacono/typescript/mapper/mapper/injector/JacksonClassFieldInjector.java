@@ -2,12 +2,9 @@ package io.github.daniloarcidiacono.typescript.mapper.mapper.injector;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.github.daniloarcidiacono.typescript.mapper.mapper.field.FieldMapper;
 import io.github.daniloarcidiacono.typescript.template.declaration.TypescriptField;
 import io.github.daniloarcidiacono.typescript.template.declaration.TypescriptInterface;
 import io.github.daniloarcidiacono.typescript.template.type.TypescriptStringConstantType;
-
-import java.lang.reflect.Field;
 
 /**
  * Class field injector that integrates with Jackson annotations
@@ -19,11 +16,7 @@ import java.lang.reflect.Field;
  * @author Danilo Arcidiacono
  */
 public class JacksonClassFieldInjector implements ClassFieldInjector {
-    // Field mapper
-    private FieldMapper fieldMapper;
-
-    public JacksonClassFieldInjector(final FieldMapper fieldMapper) {
-        this.fieldMapper = fieldMapper;
+    public JacksonClassFieldInjector() {
     }
 
     @Override
@@ -43,13 +36,5 @@ public class JacksonClassFieldInjector implements ClassFieldInjector {
         return javaClass.getSuperclass() != null &&
                javaClass.getSuperclass().isAnnotationPresent(JsonSubTypes.class) &&
                javaClass.getSuperclass().isAnnotationPresent(JsonTypeInfo.class);
-    }
-
-    public FieldMapper getFieldMapper() {
-        return fieldMapper;
-    }
-
-    public void setFieldMapper(FieldMapper fieldMapper) {
-        this.fieldMapper = fieldMapper;
     }
 }

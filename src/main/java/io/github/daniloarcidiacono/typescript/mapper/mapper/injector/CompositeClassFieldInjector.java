@@ -1,27 +1,12 @@
 package io.github.daniloarcidiacono.typescript.mapper.mapper.injector;
 
 import io.github.daniloarcidiacono.typescript.template.declaration.TypescriptInterface;
+import io.github.daniloarcidiacono.commons.lang.Composite;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class CompositeClassFieldInjector implements ClassFieldInjector {
-    private List<ClassFieldInjector> injectors = new ArrayList<>();
-
-    public CompositeClassFieldInjector injector(final ClassFieldInjector injector) {
-        injectors.add(injector);
-        return this;
-    }
-
-    public CompositeClassFieldInjector injector(final ClassFieldInjector ...injector) {
-        Collections.addAll(injectors, injector);
-        return this;
-    }
-
+public class CompositeClassFieldInjector extends Composite<ClassFieldInjector> implements ClassFieldInjector {
     @Override
     public void injectFields(final TypescriptInterface iface, final Class<?> javaClass) {
-        for (ClassFieldInjector injector : injectors) {
+        for (ClassFieldInjector injector : components) {
             if (injector.supports(javaClass)) {
                 injector.injectFields(iface, javaClass);
             }
@@ -30,7 +15,7 @@ public class CompositeClassFieldInjector implements ClassFieldInjector {
 
     @Override
     public boolean supports(final Class<?> javaClass) {
-        for (ClassFieldInjector injector : injectors) {
+        for (ClassFieldInjector injector : components) {
             if (injector.supports(javaClass)) {
                 return true;
             }

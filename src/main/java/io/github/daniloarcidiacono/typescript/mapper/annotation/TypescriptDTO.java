@@ -13,16 +13,19 @@ import java.lang.reflect.Modifier;
 public @interface TypescriptDTO {
     /**
      * Identifier to use for the class
+     * @return the identifier
      */
     String identifier() default "";
 
     /**
      * The relative path to write the class.
+     * @return the path
      */
     String path() default "";
 
     /**
      * Fields having at least one of the specified modifiers are ignored
+     * @return a bitmask composed of {@link Modifier} values
      */
     int[] ignoreFieldModifiers() default { Modifier.STATIC };
 }

@@ -1,30 +1,36 @@
 package io.github.daniloarcidiacono.typescript.mapper.mapper.type;
 
-import io.github.daniloarcidiacono.typescript.mapper.mapper.TypescriptMapper;
+import io.github.daniloarcidiacono.typescript.mapper.registry.TypescriptIdentifierRegistry;
 import io.github.daniloarcidiacono.typescript.template.type.TypescriptEnumType;
 import io.github.daniloarcidiacono.typescript.template.type.TypescriptType;
 
 import java.lang.reflect.Type;
 
 public class EnumTypeMapper implements TypeMapper {
-    private TypescriptMapper typescriptMapper;
+    private TypescriptIdentifierRegistry idRegistry;
 
-    public EnumTypeMapper(final TypescriptMapper typescriptMapper) {
-        this.typescriptMapper = typescriptMapper;
+    public EnumTypeMapper(final TypescriptIdentifierRegistry idRegistry) {
+        this.idRegistry = idRegistry;
     }
 
     @Override
     public TypescriptType map(final Type type) {
-        final Class<?> clazz = (Class<?>)type;
-        typescriptMapper.addClass(clazz);
+        if (!supports(type)) {
+            return null;
+        }
 
-        final String identifier = typescriptMapper.getIdRegistry().registerIdentifier(clazz);
+        final Class<?> clazz = (Class<?>)type;
+
+        // @TODO
+        // If the type is an enum, then it must be mapped as well
+//        typescriptMapper.addClass(clazz);
+
+        final String identifier = idRegistry.registerIdentifier(clazz);
         return new TypescriptEnumType(identifier);
     }
 
 
-    @Override
-    public boolean supports(Type type) {
+    private boolean supports(Type type) {
         return type instanceof Class && ((Class)type).isEnum();
     }
 }
