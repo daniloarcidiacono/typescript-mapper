@@ -1,6 +1,6 @@
 package io.github.daniloarcidiacono.typescript.mapper.matcher;
 
-import io.github.daniloarcidiacono.commons.lang.Composite;
+import io.github.daniloarcidiacono.commons.lang.patterns.Composite;
 
 public class CompositeClassMatcher extends Composite<ClassMatcher> implements ClassMatcher {
     @Override

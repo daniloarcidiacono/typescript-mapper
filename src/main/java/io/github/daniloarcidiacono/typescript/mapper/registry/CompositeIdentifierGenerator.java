@@ -1,6 +1,6 @@
 package io.github.daniloarcidiacono.typescript.mapper.registry;
 
-import io.github.daniloarcidiacono.commons.lang.Composite;
+import io.github.daniloarcidiacono.commons.lang.patterns.Composite;
 
 /**
  * Queries a list of {@link IdentifierGenerator} until one returns a valid identifier.

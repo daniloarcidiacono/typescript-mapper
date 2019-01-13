@@ -1,7 +1,7 @@
 package io.github.daniloarcidiacono.typescript.mapper.processor;
 
 import io.github.daniloarcidiacono.typescript.mapper.TypescriptSourceBundle;
-import io.github.daniloarcidiacono.commons.lang.Composite;
+import io.github.daniloarcidiacono.commons.lang.patterns.Composite;
 
 public class CompositeSourceBundleProcessor extends Composite<SourceBundleProcessor> implements SourceBundleProcessor {
     @Override

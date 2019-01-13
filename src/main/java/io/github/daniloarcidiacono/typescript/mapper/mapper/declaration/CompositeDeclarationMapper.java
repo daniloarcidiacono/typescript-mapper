@@ -1,7 +1,7 @@
 package io.github.daniloarcidiacono.typescript.mapper.mapper.declaration;
 
 import io.github.daniloarcidiacono.typescript.template.declaration.TypescriptDeclaration;
-import io.github.daniloarcidiacono.commons.lang.Composite;
+import io.github.daniloarcidiacono.commons.lang.patterns.Composite;
 
 import java.lang.reflect.Type;
 

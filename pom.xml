@@ -50,8 +50,8 @@
         <jackson.version>2.9.5</jackson.version>
         <slf4j.version>1.7.25</slf4j.version>
         <reflections.version>0.9.11</reflections.version>
-        <commons-lang.version>0.0.1-SNAPSHOT</commons-lang.version>
-        <typescript-template.version>0.0.1-SNAPSHOT</typescript-template.version>
+        <commons-lang.version>0.1.0</commons-lang.version>
+        <typescript-template.version>0.0.1</typescript-template.version>
 
         <!-- Plugins -->
         <maven-compiler.plugin.version>3.7.0</maven-compiler.plugin.version>

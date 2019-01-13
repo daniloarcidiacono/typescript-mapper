@@ -1,7 +1,7 @@
 package io.github.daniloarcidiacono.typescript.mapper.mapper.field;
 
 import io.github.daniloarcidiacono.typescript.template.declaration.TypescriptField;
-import io.github.daniloarcidiacono.commons.lang.Composite;
+import io.github.daniloarcidiacono.commons.lang.patterns.Composite;
 
 import java.lang.reflect.Field;
 

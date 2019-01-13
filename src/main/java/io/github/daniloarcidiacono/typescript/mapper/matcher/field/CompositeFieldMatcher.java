@@ -1,6 +1,6 @@
 package io.github.daniloarcidiacono.typescript.mapper.matcher.field;
 
-import io.github.daniloarcidiacono.commons.lang.Composite;
+import io.github.daniloarcidiacono.commons.lang.patterns.Composite;
 
 import java.lang.reflect.Field;
 

@@ -1,7 +1,7 @@
 package io.github.daniloarcidiacono.typescript.mapper.mapper.injector;
 
 import io.github.daniloarcidiacono.typescript.template.declaration.TypescriptInterface;
-import io.github.daniloarcidiacono.commons.lang.Composite;
+import io.github.daniloarcidiacono.commons.lang.patterns.Composite;
 
 public class CompositeClassFieldInjector extends Composite<ClassFieldInjector> implements ClassFieldInjector {
     @Override

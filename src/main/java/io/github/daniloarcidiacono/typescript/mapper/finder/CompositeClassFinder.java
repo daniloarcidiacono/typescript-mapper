@@ -1,6 +1,6 @@
 package io.github.daniloarcidiacono.typescript.mapper.finder;
 
-import io.github.daniloarcidiacono.commons.lang.Composite;
+import io.github.daniloarcidiacono.commons.lang.patterns.Composite;
 
 import java.util.HashSet;
 import java.util.Set;
