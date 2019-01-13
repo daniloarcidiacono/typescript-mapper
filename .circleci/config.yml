@@ -15,7 +15,15 @@ jobs:
           key: typescript-mapper-{{ checksum "pom.xml" }}
 
       # gets the project dependencies
-      - run: mvn dependency:go-offline
+      #
+      # Add the verify goal (from see https://issues.apache.org/jira/browse/MDEP-516):
+      #
+      # "It can be solved by using mvn package dependency:go-offline which creates a reactor and will works as expected.
+      #  But you can also use mvn compile dependency:go-offline but with the drawback that you can't do a mvn -o package
+      #  cause all things which are done after the life cycle phase compile will not being downloaded.."
+      #  For example if you do mvn package dependency:go-offline and afterwards you do mvn -o deploy your build will fail
+      #  cause maven-install-plugin can't be found, cause it has not been solved...."
+      - run: mvn verify dependency:go-offline
 
       # saves the project dependencies
       - save_cache:
@@ -30,18 +38,21 @@ jobs:
       - deploy:
           name: "Create GitHub release"
           command: |
-            hub release create -a target/typescript-mapper-$CIRCLE_TAG-javadoc.jar -F CHANGELOG_LATEST.md $CIRCLE_TAG
+            hub release create -a typescript-mapper-core/target/typescript-mapper-core-$CIRCLE_TAG-javadoc.jar -a typescript-mapper-maven-plugin/target/typescript-mapper-maven-plugin-$CIRCLE_TAG-javadoc.jar -F CHANGELOG_LATEST.md $CIRCLE_TAG
 
       # Upload test coverage
       - run: bash <(curl -s https://codecov.io/bash)
 
       # uploads the test metadata from the `target/surefire-reports` directory so that it can show up in the CircleCI dashboard.
       - store_test_results:
-          path: target/surefire-reports
+          path: typescript-mapper-core/target/surefire-reports
 
       # store the jar as an artifact
       - store_artifacts:
-          path: target/typescript-mapper-{{ .Environment.CIRCLE_TAG }}.jar
+          path: typescript-mapper-core/target/typescript-mapper-core-{{ .Environment.CIRCLE_TAG }}.jar
+
+      - store_artifacts:
+          path: typescript-mapper-maven-plugin/target/typescript-mapper-maven-plugin-{{ .Environment.CIRCLE_TAG }}.jar
 
 workflows:
   version: 2
