@@ -6,7 +6,7 @@
 
     <groupId>io.github.daniloarcidiacono.typescriptmapper</groupId>
     <artifactId>typescript-mapper</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>pom</packaging>
     <name>TypeScript mapper from Java classes</name>
     <description>TypeScript mapper from Java classes</description>
