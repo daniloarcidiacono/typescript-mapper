@@ -4,18 +4,24 @@ import io.github.daniloarcidiacono.typescript.template.TypescriptSource;
 import io.github.daniloarcidiacono.typescript.template.declaration.TypescriptDeclaration;
 
 import java.net.URI;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
- * @author Danilo Arcidiacono
+ * Groups of {@link TypescriptSource} along with URIs.
+ *
+ * @see SourceBundlerVisitor
+ * @see TypescriptSource
  */
 public class TypescriptSourceBundle {
     private Map<URI, TypescriptSource> bundle = new HashMap<>();
-    private Map<TypescriptSource, URI> sourceMap = new HashMap<>();
-    private Map<TypescriptDeclaration, Class<?>> classMap = new HashMap<>();
+
+    /**
+     * Note: SourceBundleProcessors alter the keys (TypescriptSources) stored in this map,
+     * so to avoid bugs an IdentityHashMap is needed (instead of a HashMap), which uses reference-equality
+     * in place of object-equality.
+     */
+    private Map<TypescriptSource, URI> sourceMap = new IdentityHashMap<>();
+    private Map<TypescriptDeclaration, Class<?>> classMap = new IdentityHashMap<>();
 
     public TypescriptSourceBundle() {
     }
