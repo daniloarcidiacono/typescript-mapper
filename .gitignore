@@ -6,4 +6,4 @@
 target/
 
 # Generated files from tests
-src/test/resources/testcases/**/generated/
+typescript-mapper-core/src/test/resources/testcases/**/generated/
