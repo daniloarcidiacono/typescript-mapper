@@ -9,11 +9,13 @@ import java.util.Map;
 
 /**
  * Gathers every Java class of a given package to a separate TypeScript file.
- * For example: com.foo.bar.ClassOne =&gt; com/foo/bar.ts
- * For example: com.foo.bar.ClassTwo =&gt; com/foo/bar.ts
- * For example: com.foo.bar.baz.ClassThree =&gt; com/foo/bar/baz.ts
- *
- * @author Danilo Arcidiacono
+ * <p>
+ * Examples:
+ * <ul>
+ *  <li>{@code com.foo.bar.ClassOne} =&gt; {@code com/foo/bar.ts}</li>
+ *  <li>{@code com.foo.bar.ClassTwo} =&gt; {@code com/foo/bar.ts}</li>
+ *  <li>{@code com.foo.bar.baz.ClassThree} =&gt; {@code com/foo/bar/baz.ts}</li>
+ * </ul>
  */
 public class PackageSourceMapper implements SourceMapper {
     private Map<String, String> packageFixedMappings = new HashMap<>();

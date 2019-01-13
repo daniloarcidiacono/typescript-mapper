@@ -5,7 +5,6 @@ import java.lang.annotation.*;
 /**
  * Annotation used to define the documentation of the generated typescript code.
  * Can be applied to a method, class, field or parameter.
- * @author Danilo Arcidiacono
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER})

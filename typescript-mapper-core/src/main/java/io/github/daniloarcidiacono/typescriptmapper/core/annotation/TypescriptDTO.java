@@ -5,7 +5,6 @@ import java.lang.reflect.Modifier;
 
 /**
  * Marker interface that can be used for searching classes that need to be converted in TypeScript code.
- * @author Danilo Arcidiacono
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})

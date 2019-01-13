@@ -2,7 +2,6 @@ package io.github.daniloarcidiacono.typescriptmapper.core.registry;
 
 /**
  * Generates an identifier for a given object.
- * @author Danilo Arcidiacono
  */
 public interface IdentifierGenerator {
     /**

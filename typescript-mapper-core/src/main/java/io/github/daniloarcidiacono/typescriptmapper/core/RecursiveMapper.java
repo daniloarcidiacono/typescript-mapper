@@ -20,7 +20,6 @@ import java.util.Set;
 
 /**
  * Main class for mapping.
- * @author Danilo Arcidiacono
  */
 public class RecursiveMapper implements TypeMapper {
     private static final Logger logger = LoggerFactory.getLogger(RecursiveMapper.class);

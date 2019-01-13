@@ -4,7 +4,6 @@ import io.github.daniloarcidiacono.commons.lang.patterns.Composite;
 
 /**
  * Queries a list of {@link IdentifierGenerator} until one returns a valid identifier.
- * @author Danilo Arcidiacono
  */
 public class CompositeIdentifierGenerator extends Composite<IdentifierGenerator> implements IdentifierGenerator {
     public CompositeIdentifierGenerator() {

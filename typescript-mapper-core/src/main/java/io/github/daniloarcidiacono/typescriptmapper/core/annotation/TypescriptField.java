@@ -4,7 +4,6 @@ import java.lang.annotation.*;
 
 /**
  * Marker interface that can be used for customizing field options.
- * @author Danilo Arcidiacono
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})

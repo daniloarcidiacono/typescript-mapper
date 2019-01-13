@@ -9,8 +9,6 @@ import java.util.List;
  * Generates an identifier for a Java class.
  * Nested classes are concatenated, and common prefixes are stripped.
  * Supports adding a suffix (default "DTO").
- *
- * @author Danilo Arcidiacono
  */
 public class ClassIdentifierGenerator implements IdentifierGenerator {
     private String identifierSuffix = "DTO";

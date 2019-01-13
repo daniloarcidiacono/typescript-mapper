@@ -1,6 +1,6 @@
 package io.github.daniloarcidiacono.typescriptmapper.core.processor;
 
-import io.github.daniloarcidiacono.typescriptmapper.analyzer.TypescriptAnalyzer;
+import io.github.daniloarcidiacono.typescriptmapper.core.analyzer.TypescriptAnalyzer;
 import io.github.daniloarcidiacono.typescriptmapper.core.TypescriptSourceBundle;
 import io.github.daniloarcidiacono.typescript.template.TypescriptSource;
 import io.github.daniloarcidiacono.typescript.template.declaration.TypescriptDeclaration;
@@ -37,7 +37,7 @@ public class ImportsSourceBundleProcessor implements SourceBundleProcessor {
             }
 
 
-            // For each import statement neede
+            // For each import statement needed
             for (Map.Entry<TypescriptSource, Set<String>> importEntry : importMap.entrySet()) {
                 // Calculate the import path relative to the source
                 final String importPathStr = computeImportPath(bundle, source, importEntry.getKey());
@@ -65,7 +65,7 @@ public class ImportsSourceBundleProcessor implements SourceBundleProcessor {
 
         final Path importPath = sourcePath != null ? sourcePath.relativize(includePath) : includePath;
         String importPathStr = removeExtension(importPath.toString());
-        if (!importPathStr.startsWith("src/test/resources")) {
+        if (!importPathStr.startsWith(".")) {
             importPathStr = "./" + importPathStr;
         }
 

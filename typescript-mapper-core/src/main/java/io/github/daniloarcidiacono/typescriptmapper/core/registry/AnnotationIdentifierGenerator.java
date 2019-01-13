@@ -6,7 +6,6 @@ import io.github.daniloarcidiacono.typescriptmapper.core.annotation.TypescriptDT
  * Identifier generator for classes annotated with {@link TypescriptDTO#identifier()}.
  *
  * @see TypescriptDTO
- * @author Danilo Arcidiacono
  */
 public class AnnotationIdentifierGenerator implements IdentifierGenerator {
     public AnnotationIdentifierGenerator() {

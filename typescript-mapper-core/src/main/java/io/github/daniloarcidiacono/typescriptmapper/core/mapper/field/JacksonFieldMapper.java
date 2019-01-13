@@ -14,8 +14,6 @@ import java.lang.reflect.Field;
  *     <li>{@link JsonTypeInfo}</li>
  *     <li>{@link JsonSubTypes}</li>
  * </ul>
- *
- * @author Danilo Arcidiacono
  */
 public class JacksonFieldMapper implements FieldMapper {
     @Override

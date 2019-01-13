@@ -9,7 +9,6 @@ import java.net.URISyntaxException;
 /**
  * Maps uri by checking {@link TypescriptDTO} annotation.
  * @see TypescriptDTO
- * @author Danilo Arcidiacono
  */
 public class AnnotationSourceMapper implements SourceMapper {
     public AnnotationSourceMapper() {

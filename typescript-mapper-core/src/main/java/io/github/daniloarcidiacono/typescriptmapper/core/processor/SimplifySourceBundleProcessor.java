@@ -1,6 +1,6 @@
 package io.github.daniloarcidiacono.typescriptmapper.core.processor;
 
-import io.github.daniloarcidiacono.typescriptmapper.analyzer.TypescriptAnalyzer;
+import io.github.daniloarcidiacono.typescriptmapper.core.analyzer.TypescriptAnalyzer;
 import io.github.daniloarcidiacono.typescriptmapper.core.TypescriptSourceBundle;
 import io.github.daniloarcidiacono.typescript.template.TypescriptRenderable;
 import io.github.daniloarcidiacono.typescript.template.TypescriptSource;

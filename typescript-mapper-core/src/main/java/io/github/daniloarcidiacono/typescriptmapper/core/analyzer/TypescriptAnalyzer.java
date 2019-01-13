@@ -1,4 +1,4 @@
-package io.github.daniloarcidiacono.typescriptmapper.analyzer;
+package io.github.daniloarcidiacono.typescriptmapper.core.analyzer;
 
 import io.github.daniloarcidiacono.typescriptmapper.core.TypescriptSourceBundle;
 import io.github.daniloarcidiacono.typescript.template.TypescriptSource;
@@ -14,7 +14,6 @@ import java.util.*;
  * Main class for static analysis of a {@link TypescriptSourceBundle}.
  *
  * @see TypescriptSourceBundle
- * @author Danilo Arcidiacono
  */
 public class TypescriptAnalyzer {
     private final TypescriptSourceBundle sourceBundle;

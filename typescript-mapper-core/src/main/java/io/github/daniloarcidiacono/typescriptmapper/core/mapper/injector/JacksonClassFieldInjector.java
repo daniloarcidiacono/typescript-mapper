@@ -12,8 +12,6 @@ import io.github.daniloarcidiacono.typescript.template.type.TypescriptStringCons
  *     <li>{@link JsonTypeInfo}</li>
  *     <li>{@link JsonSubTypes}</li>
  * </ul>
- *
- * @author Danilo Arcidiacono
  */
 public class JacksonClassFieldInjector implements ClassFieldInjector {
     public JacksonClassFieldInjector() {

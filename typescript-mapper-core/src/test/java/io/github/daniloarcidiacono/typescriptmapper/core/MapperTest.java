@@ -14,8 +14,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * Unit tests for Typescript mapper.<br>
  * Sample Java snippets (contained in {@value #TEST_CASE_SOURCE_PACKAGE} package) are mapped into {@value #TEST_CASE_GENERATED} and checked against the expected results (see {@value #TEST_CASE_EXPECTED} in resources).
- *
- * @author Danilo Arcidiacono
  */
 class MapperTest {
     private static final String TEST_CASE_NAME_VARIABLE = "${TEST_CASE}";

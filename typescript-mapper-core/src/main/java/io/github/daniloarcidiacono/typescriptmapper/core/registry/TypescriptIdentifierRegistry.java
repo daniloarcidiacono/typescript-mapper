@@ -6,7 +6,6 @@ import java.util.Map;
 /**
  * Identifier registry for Java objects.
  * Delegates the generation logic to a list of {@link IdentifierGenerator}.
- * @author Danilo Arcidiacono
  */
 public class TypescriptIdentifierRegistry {
     /**

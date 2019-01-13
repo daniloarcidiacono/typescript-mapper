@@ -4,11 +4,12 @@ import io.github.daniloarcidiacono.typescriptmapper.core.RecursiveMapper;
 import io.github.daniloarcidiacono.typescriptmapper.core.SourceBundlerVisitor;
 import io.github.daniloarcidiacono.typescriptmapper.core.TypescriptSourceBundle;
 import io.github.daniloarcidiacono.typescriptmapper.core.processor.CompositeSourceBundleProcessor;
+import io.github.daniloarcidiacono.typescriptmapper.core.processor.SourceBundleProcessor;
 
 /**
- * Main façade for Typescript mapper chain.<br>
- * RecursiveMapper =&gt; SourceBundlerVisitor =&gt; { SourceBundleProcessor }
- * @author Danilo Arcidiacono
+ * Main façade for Typescript mapper chain.
+ * <p>
+ * {@link RecursiveMapper} =&gt; {@link SourceBundlerVisitor} =&gt; { {@link SourceBundleProcessor} }
  */
 public class MappingChainBuilder {
     // Mapper
