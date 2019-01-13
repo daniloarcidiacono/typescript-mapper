@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>typescript-mapper-maven-plugin</artifactId>
-    <packaging>jar</packaging>
+    <packaging>maven-plugin</packaging>
     <name>Typescript mapper Maven plugin</name>
     <description>Typescript mapper Maven plugin</description>
 
