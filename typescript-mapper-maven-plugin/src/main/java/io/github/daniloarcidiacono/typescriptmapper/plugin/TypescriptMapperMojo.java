@@ -1,8 +1,6 @@
 package io.github.daniloarcidiacono.typescriptmapper.plugin;
 
-import io.github.daniloarcidiacono.typescriptmapper.core.builder.FluentConfigurer;
 import io.github.daniloarcidiacono.typescriptmapper.core.builder.MappingChainBuilder;
-import io.github.daniloarcidiacono.typescript.template.TypescriptComments;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.descriptor.PluginDescriptor;
@@ -24,7 +22,7 @@ import java.util.Map;
     defaultPhase = LifecyclePhase.COMPILE,
     requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME
 )
-public class TypescriptMapperMojo extends AbstractMojo {
+class TypescriptMapperMojo extends AbstractMojo {
     @Component
     private PluginDescriptor descriptor;
 
@@ -33,6 +31,9 @@ public class TypescriptMapperMojo extends AbstractMojo {
 
     @Parameter(defaultValue = "file:///${project.build.directory}/mapped/", required = true)
     private URL outputDirectory;
+
+    @Parameter(required = false)
+    private String configurerClass;
 
     @Parameter(required = true)
     private String basePackage;
@@ -92,59 +93,57 @@ public class TypescriptMapperMojo extends AbstractMojo {
             getLog().info("Base package: " + basePackage);
             getLog().info("Output directory: " + outputDirectory);
 
-            // Map
-            final MappingChainBuilder builder = new MappingChainBuilder();
-            final FluentConfigurer configurer = FluentConfigurer.forChain(builder)
-                .standard(basePackage, outputDirectory.toURI())
-                    .injectPreamble(injectPreamble)
-                    .injectImports(injectImports)
-                    .sortDeclarations(sortDeclarations)
-                    .simplifyResult(simplifyResult)
-                    .recursiveMapping()
-                        .scanClasses(true)
-                            .matchTypescriptDTOAnnotation(annotationConfig)
-                        .and()
-                        .excludeJavaClasses(excludeJavaClasses)
-                        .identifierRegistry()
-                            .checkAnnotations(annotationConfig)
-                            .withClassIdentifierGenerator()
-                                .withSuffix("")
-                                .withEnclosingSeparator("")
-                            .and()
-                        .and()
-                        .withStandardClassFieldInjector()
-                            .excludeStaticFields(excludeStaticFields)
-                        .and()
-                    .and();
+            final TypescriptMapperMojoConfigurer configurer;
 
-            if (suffix != null) {
-                configurer
-                    .recursiveMapping()
-                        .identifierRegistry()
-                            .withClassIdentifierGenerator()
-                                .withSuffix(suffix);
-            }
+            // If we have a configurer specified...
+            if (configurerClass != null && !configurerClass.isEmpty()) {
+                try {
+                    // Instance it
+                    final Class<?> aClass = Class.forName(configurerClass);
 
-            if (enclosingSeparator != null) {
-                configurer
-                    .recursiveMapping()
-                        .identifierRegistry()
-                            .withClassIdentifierGenerator()
-                                .withEnclosingSeparator(enclosingSeparator);
-            }
+                    if (!TypescriptMapperMojoConfigurer.class.isAssignableFrom(aClass)) {
+                        throw new Exception("Provided configurerClass " + configurerClass + " is of type " + aClass.getSimpleName() + ", which is not a subtype of TypescriptMapperMojoConfigurer.");
+                    }
 
-            if (preamble != null) {
-                configurer.preamble(new TypescriptComments(preamble));
-            }
-
-            if (mappings != null) {
-                for (String packageName : mappings.keySet()) {
-                    configurer.withPackageSourceMapper().withStaticMapping(packageName, mappings.get(packageName).toString());
+                    configurer = (TypescriptMapperMojoConfigurer) aClass.newInstance();
+                } catch (ClassNotFoundException e) {
+                    throw new Exception("Provided configurerClass " + configurerClass + " not found");
+                } catch (ClassCastException | InstantiationException | IllegalAccessException ex) {
+                    throw new Exception("Could not instance configurerClass " + configurerClass, ex);
                 }
+
+                // Success
+                getLog().info("Using configurer " + configurerClass);
+            } else {
+                // Otherwise, use the default implementation
+                configurer = new DefaultTypescriptMapperMojoConfigurer();
             }
 
+            // Create the mojo parameters object
+            final TypescriptMapperMojoParameters parameters = new TypescriptMapperMojoParameters()
+                .setOutputDirectory(outputDirectory)
+                .setConfigurerClass(configurerClass)
+                .setBasePackage(basePackage)
+                .setInjectPreamble(injectPreamble)
+                .setPreamble(preamble)
+                .setSuffix(suffix)
+                .setEnclosingSeparator(enclosingSeparator)
+                .setMappings(mappings)
+                .setInjectImports(injectImports)
+                .setSortDeclarations(sortDeclarations)
+                .setSimplifyResult(simplifyResult)
+                .setExcludeJavaClasses(excludeJavaClasses)
+                .setAnnotationConfig(annotationConfig)
+                .setExcludeStaticFields(excludeStaticFields);
+
+            // Configure the mapping chain
+            final MappingChainBuilder builder = new MappingChainBuilder();
+            configurer.configure(parameters, builder, getLog());
+
+            // Run the mapping chain
             builder.process();
         } catch (Exception e) {
+            getLog().error("Error while executing the plugin: " + e.getMessage());
             throw new MojoExecutionException("Error while executing the plugin", e);
         }
     }
